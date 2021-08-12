@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+  <title>CRM</title>
+</head>
+
+<body>
+  <div class="container d-flex">
+    <div class="form-add-wrapper">
+      <form class="form-add" action="">
+        <h3 class="form-add__header">
+          Добавить студента:
+        </h3>
+        <div class="form-add-group">
+          <label class="form-add__label" for="FIO">ФИО</label>
+          <input class="form-control" type="text" id="FIO" name="FIO" placeholder="Исаак Исаакович Зильберштейн">
+        </div>
+        <div class="form-add-group">
+          <label class="form-add__label" for="faculty">Факультет</label>
+          <input class="form-control" type="text" id="faculty" placeholder="Экономика">
+        </div>
+        <div class="form-add-group">
+          <label class="form-add__label" for="DOB">Дата рождения</label>
+          <input class="form-control" type="date" id="DOB" name="DOB">
+        </div>
+        <div class="form-add-group">
+          <label class="form-add__label" for="start-study">Год начала обучения</label>
+          <input class="form-control" type="date" id="start-study" name="start-study">
+        </div>
+        <button type="submit" class="btn btn-primary">Добавить</button>
+      </form>
+    </div>
+    <div class="tabel-wrapper">
+      <form class="tabel-filter mb-3">
+        <h3 class="tabel-filter__heading">
+          Найти студента:
+        </h3>
+        <div class="form-row align-items-center d-flex tabel-filter__content">
+          <div class="col-auto">
+            <input type="text" class="form-control" id="FIO-filter" placeholder="Имя/Фамилия/Отчество">
+          </div>
+          <div class="col-auto">
+            <input type="text" class="form-control" id="faculty-filter" placeholder="Факультет">
+          </div>
+          <div class="col-auto">
+            <input type="text" class="form-control" id="faculty-filter" placeholder="Год поступления">
+          </div>
+          <div class="col-auto">
+            <input type="text" class="form-control" id="faculty-filter" placeholder="Год выпуска">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Искать</button>
+          </div>
+        </div>
+      </form>
+      <table class="table table-striped table-bordered table-hover tabel-students">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Факультет</th>
+            <th scope="col">Дата рождения</th>
+            <th scope="col">Годы обучения</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+
+</html>
