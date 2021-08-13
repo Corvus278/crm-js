@@ -8,13 +8,14 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
+  <script src="main.js"></script>
   <title>CRM</title>
 </head>
 
 <body>
   <div class="container d-flex">
     <div class="form-add-wrapper">
-      <form class="form-add" action="">
+      <form class="form-add form" action="">
         <h3 class="form-add__header">
           Добавить студента:
         </h3>
@@ -31,10 +32,15 @@
           <input class="form-control" type="date" id="DOB" name="DOB">
         </div>
         <div class="form-add-group">
-          <label class="form-add__label" for="start-study">Год начала обучения</label>
-          <input class="form-control" type="date" id="start-study" name="start-study">
+          <label class="form-add__label" for="dateIn">Год начала обучения</label>
+          <input class="form-control" type="date" id="dateIn" name="dateIn">
         </div>
-        <button type="submit" class="btn btn-primary">Добавить</button>
+        <button class="btn btn-primary form-add__submit" type="submit">
+          <div class="form__notification notification" style="display: none; opacity: 0;">
+            <p class="notification__message">Вся форма обязательна для заполнения!</p>
+          </div>
+          Добавить
+        </button>
       </form>
     </div>
     <div class="tabel-wrapper">
@@ -50,13 +56,13 @@
             <input type="text" class="form-control" id="faculty-filter" placeholder="Факультет">
           </div>
           <div class="col-auto">
-            <input type="text" class="form-control" id="faculty-filter" placeholder="Год поступления">
+            <input type="text" class="form-control" id="dataIn-filter" placeholder="Год поступления">
           </div>
           <div class="col-auto">
-            <input type="text" class="form-control" id="faculty-filter" placeholder="Год выпуска">
+            <input type="text" class="form-control" id="dataOut-filter" placeholder="Год выпуска">
           </div>
           <div class="col-auto">
-            <button type="submit" class="btn btn-primary">Искать</button>
+            <button class="btn btn-primary tabel-filter__submit" type="submit">Искать</button>
           </div>
         </div>
       </form>

@@ -26,6 +26,36 @@
   line-height: 1;
 }
 
+.form-add__submit {
+  position: relative;
+}
+
+.form__notification {
+  position: absolute;
+  top: -48px;
+  left: 0;
+  padding: 5px;
+  width: 285px;
+  height: 36px;
+  border: 2px solid #ced4da;
+  border-radius: .25rem;
+  background-color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  color: #212529;
+  font-size: 14px;
+  transition: opacity .3s;
+}
+
+.form__notification--active {
+  transform: translateX(110%)
+}
+
+.notification__message {
+  margin-bottom: 0;
+  color: #212529;
+  font-size: 14px;
+}
+
 .tabel-filter__content {
   justify-content: space-between;
 }
