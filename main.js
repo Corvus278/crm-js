@@ -12,10 +12,47 @@ function formNotification(message) {
   }, 3000)
 }
 
-function addTolocalStorage(data) {
-  const oldList = localStorage.getItem('students')
-  oldList.push(data)
-  // localStorage.setItem('students',)
+
+function add2localStorage(data) {
+  let oldList = []
+
+  try {
+    // Получение уже имеющихся данных
+    oldList = JSON.parse(localStorage.getItem('students'))
+    // Добавление новых данных
+    oldList.push(data)
+    localStorage.setItem('students', JSON.stringify(oldList))
+  } catch {
+    // Если lokalStorage ещё пустой
+    oldList.push(data)
+    localStorage.setItem('students', JSON.stringify(oldList))
+  }
+}
+
+
+function sendFormData(formData) {
+  const formatDate = {}
+  formData.forEach(input => {
+    switch (input.name) {
+      case 'FIO':
+        const fio = input.value.split(' ')
+        formatDate.surname = fio[0]
+        formatDate.name = fio[1]
+        formatDate.secondName = fio[2]
+        break
+      case 'faculty':
+        formatDate.faculty = input.value
+        break
+      case 'DOB':
+        formatDate.dateOfBirthday = input.value
+        break
+      case 'dateIn':
+        formatDate.dateIn = input.value
+        break
+    }
+  })
+
+  add2localStorage(formatDate)
 }
 
 
@@ -24,10 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault()
 
     const inputsValues = []
-    Array.from(document.querySelector('.form-add').querySelectorAll('input'))
-      .forEach((input) => {
-        input.type === 'date' ? inputsValues.push({ name: input.name, value: input.valueAsDate }) && console.log(input.valueAsDate) : inputsValues.push({ name: input.name, value: input.value })
-      })
+    const allInputs = Array.from(document.querySelector('.form-add').querySelectorAll('input'))
+    allInputs.forEach((input) => {
+      input.type === 'date' ? inputsValues.push({ name: input.name, value: input.valueAsDate }) : inputsValues.push({ name: input.name, value: input.value })
+    })
 
     // проверка на валидность
     let message
@@ -52,7 +89,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     })
+    if (message) {
+      formNotification(message)
+    }
 
-    if (message) formNotification(message)
+    // Отправка формы в случае успешной валидации
+    else {
+      sendFormData(inputsValues)
+      allInputs.forEach(input => input.value = '')
+    }
   })
 })
