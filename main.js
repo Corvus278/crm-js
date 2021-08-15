@@ -1,3 +1,10 @@
+function parseDate(dateString) {
+  const dateList = dateString.split('.');
+  [dateList[0], dateList[1]] = [dateList[1], dateList[0]]
+  return dateList.join('.')
+}
+
+
 function formNotification(message) {
   const notification = document.querySelector('.form-add').querySelector('.notification')
   notification.textContent = message
@@ -23,7 +30,8 @@ function add2localStorage(data) {
     oldList.push(data)
     localStorage.setItem('students', JSON.stringify(oldList))
   } catch {
-    // Если lokalStorage ещё пустой
+    // Если localStorage ещё пустой
+    oldList = []
     oldList.push(data)
     localStorage.setItem('students', JSON.stringify(oldList))
   }
@@ -44,10 +52,10 @@ function sendFormData(formData) {
         formatDate.faculty = input.value
         break
       case 'DOB':
-        formatDate.dateOfBirthday = input.value
+        formatDate.dateOfBirthday = input.value.toLocaleDateString()
         break
       case 'dateIn':
-        formatDate.dateIn = input.value
+        formatDate.dateIn = input.value.toLocaleDateString()
         break
     }
   })
@@ -56,10 +64,75 @@ function sendFormData(formData) {
 }
 
 
+function tableRender(students = JSON.parse(localStorage.getItem('students'))) {
+  function studentCourse(dateIn) {
+    const dateNow = new Date()
+    const dateEnd = new Date(`01.09.${dateIn.getFullYear() + 4}`)
+
+    if (dateNow > dateEnd) { return 'закончил' }
+    else {
+      return `${(parseInt(dateNow.getFullYear()) - parseInt(dateIn.getFullYear())) + 1} курс`
+    }
+  }
+
+  const nowYear = new Date().getFullYear()
+  const table = document.querySelector('.table-students')
+  const tbody = table.querySelector('tbody')
+
+  // Очищение таблицы
+  Array.from(tbody.querySelectorAll('tr')).forEach(tr => tr.remove())
+
+  // Рендеринг столбцов
+  if (students) {
+    students.forEach((student) => {
+      // Преобразование времени в объект
+      const fullDateOfBirthday = new Date(parseDate(student.dateOfBirthday))
+      student.dateOfBirthday = fullDateOfBirthday
+      const fullDateIn = new Date(parseDate(student.dateIn))
+      student.dateIn = fullDateIn
+
+      // Создание DOM
+      const tr = document.createElement('tr')
+
+      const th = document.createElement('th')
+      th.scope = 'row'
+      th.textContent = tbody.childElementCount + 1
+
+      const fio = document.createElement('td')
+      const faculty = document.createElement('td')
+      const dateOfBirthday = document.createElement('td')
+      const dateIn = document.createElement('td')
+
+      // Заполнение столбцов
+      fio.textContent = `${student.surname} ${student.name} ${student.secondName}`
+      faculty.textContent = student.faculty
+      dateOfBirthday.textContent = `${student.dateOfBirthday.toLocaleDateString()} (${parseInt(nowYear) - parseInt(student.dateOfBirthday.getFullYear())} лет)`
+      dateIn.textContent = `${student.dateIn.getFullYear()}-${parseInt(student.dateIn.getFullYear()) + 3} (${studentCourse(student.dateIn)})`
+
+      // Рендеринг 
+      tr.append(...[
+        th,
+        fio,
+        faculty,
+        dateOfBirthday,
+        dateIn
+      ])
+      tbody.append(tr)
+    })
+  }
+
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Рендер таблицы
+  tableRender()
+  // localStorage.clear()
+
   document.querySelector('.form-add').addEventListener('submit', (e) => {
     e.preventDefault()
 
+    // Запись значений формы в объект
     const inputsValues = []
     const allInputs = Array.from(document.querySelector('.form-add').querySelectorAll('input'))
     allInputs.forEach((input) => {
@@ -97,6 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
       sendFormData(inputsValues)
       allInputs.forEach(input => input.value = '')
+      tableRender()
     }
   })
 })
