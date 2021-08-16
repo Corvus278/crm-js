@@ -1,4 +1,4 @@
-function parseDate(dateString) {
+function replaceDate(dateString) {
   const dateList = dateString.split('.');
   [dateList[0], dateList[1]] = [dateList[1], dateList[0]]
   return dateList.join('.')
@@ -64,11 +64,18 @@ function sendFormData(formData) {
 }
 
 
-function filterFioByAlphabet(students) {
-  return students.sort((studentA, studentB) => {
-    if ((studentA.surname + studentA.name + studentA.secondName).toLowerCase() < (studentB.surname + studentB.name + studentB.secondName).toLowerCase()) return -1
-    else return 1
-  })
+function filterByAlphabet(students, key) {
+  if (key === 'fio') {
+    return students.sort((studentA, studentB) => {
+      if ((studentA.surname + studentA.name + studentA.secondName).toLowerCase() < (studentB.surname + studentB.name + studentB.secondName).toLowerCase()) return -1
+      else return 1
+    })
+  } else {
+    return students.sort((studentA, studentB) => {
+      if (studentA[key].toLowerCase() < studentB[key].toLowerCase()) return -1
+      else return 1
+    })
+  }
 }
 
 
@@ -94,9 +101,9 @@ function tableRender(students = JSON.parse(localStorage.getItem('students'))) {
   if (students) {
     students.forEach((student) => {
       // Преобразование времени в объект
-      const fullDateOfBirthday = new Date(parseDate(student.dateOfBirthday))
+      const fullDateOfBirthday = new Date(replaceDate(student.dateOfBirthday))
       student.dateOfBirthday = fullDateOfBirthday
-      const fullDateIn = new Date(parseDate(student.dateIn))
+      const fullDateIn = new Date(replaceDate(student.dateIn))
       student.dateIn = fullDateIn
 
       // Создание DOM
@@ -128,11 +135,6 @@ function tableRender(students = JSON.parse(localStorage.getItem('students'))) {
       tbody.append(tr)
     })
   }
-
-  // Обработчики на заголовки таблицы
-  document.querySelector('.table-th__fio').addEventListener('click', () => {
-    tableRender(filterFioByAlphabet(JSON.parse(localStorage.getItem('students'))))
-  })
 }
 
 
@@ -186,5 +188,23 @@ document.addEventListener('DOMContentLoaded', () => {
       allInputs.forEach(input => input.value = '')
       tableRender()
     }
+  })
+
+  // ------ Фильтры для таблицы ------
+
+  // Обработчики на заголовки таблицы
+  document.querySelector('.table-th__fio').addEventListener('click', () => {
+    tableRender(filterByAlphabet(JSON.parse(localStorage.getItem('students')), 'fio'))
+  })
+  document.querySelector('.table-th__faculty').addEventListener('click', () => {
+    tableRender(filterByAlphabet(JSON.parse(localStorage.getItem('students')), 'faculty'))
+  })
+  document.querySelector('.table-th__DOB').addEventListener('click', () => {
+    const students = JSON.parse(localStorage.getItem('students'))
+    students.sort((studentA, studentB) => {
+      if (new Date(replaceDate(studentA.dateOfBirthday)) < new Date(replaceDate(studentB.dateOfBirthday))) return -1
+      else return 1
+    })
+    tableRender(students)
   })
 })
