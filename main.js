@@ -109,7 +109,7 @@ function tableRender(students = JSON.parse(localStorage.getItem('students'))) {
       dateOfBirthday.textContent = `${student.dateOfBirthday.toLocaleDateString()} (${parseInt(nowYear) - parseInt(student.dateOfBirthday.getFullYear())} лет)`
       dateIn.textContent = `${student.dateIn.getFullYear()}-${parseInt(student.dateIn.getFullYear()) + 3} (${studentCourse(student.dateIn)})`
 
-      // Рендеринг 
+      // Рендеринг
       tr.append(...[
         th,
         fio,
@@ -145,6 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (typeof input.value === 'string') {
         if (input.value.trim() === '') {
           message = 'Вся форма обязательна для заполнения'
+        } else if (input.name === 'FIO' && input.value.split(' ').length < 3) {
+          message = 'Нужно указать полное ФИО'
         }
       } else {
         if (input.value === null) {
