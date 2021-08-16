@@ -64,6 +64,14 @@ function sendFormData(formData) {
 }
 
 
+function filterFioByAlphabet(students) {
+  return students.sort((studentA, studentB) => {
+    if ((studentA.surname + studentA.name + studentA.secondName).toLowerCase() < (studentB.surname + studentB.name + studentB.secondName).toLowerCase()) return -1
+    else return 1
+  })
+}
+
+
 function tableRender(students = JSON.parse(localStorage.getItem('students'))) {
   function studentCourse(dateIn) {
     const dateNow = new Date()
@@ -121,6 +129,10 @@ function tableRender(students = JSON.parse(localStorage.getItem('students'))) {
     })
   }
 
+  // Обработчики на заголовки таблицы
+  document.querySelector('.table-th__fio').addEventListener('click', () => {
+    tableRender(filterFioByAlphabet(JSON.parse(localStorage.getItem('students'))))
+  })
 }
 
 
