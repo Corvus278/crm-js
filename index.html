@@ -49,20 +49,29 @@
           Найти студента:
         </h3>
         <div class="form-row align-items-center d-flex tabel-filter__content">
-          <div class="col-auto">
-            <input type="text" class="form-control" id="FIO-filter" placeholder="Имя/Фамилия/Отчество">
+          <div class="col-auto table-filter__input-cont">
+            <input type="text" class="form-control" name="FIO-filter" placeholder="Имя/Фамилия/Отчество">
+            <button class="table-filter__submit table-search">
+              <img class="table-search__img" src="img/search.svg" alt="Искать">
+            </button>
           </div>
-          <div class="col-auto">
-            <input type="text" class="form-control" id="faculty-filter" placeholder="Факультет">
+          <div class="col-auto table-filter__input-cont">
+            <input type="text" class="form-control" name="faculty-filter" placeholder="Факультет">
+            <button class="table-filter__submit table-search">
+              <img class="table-search__img" src="img/search.svg" alt="Искать">
+            </button>
           </div>
-          <div class="col-auto">
-            <input type="text" class="form-control" id="dataIn-filter" placeholder="Год поступления">
+          <div class="col-auto table-filter__input-cont">
+            <input type="text" class="form-control" name="dataIn-filter" placeholder="Год поступления">
+            <button class="table-filter__submit table-search">
+              <img class="table-search__img" src="img/search.svg" alt="Искать">
+            </button>
           </div>
-          <div class="col-auto">
-            <input type="text" class="form-control" id="dataOut-filter" placeholder="Год выпуска">
-          </div>
-          <div class="col-auto">
-            <button class="btn btn-primary tabel-filter__submit" type="submit">Искать</button>
+          <div class="col-auto table-filter__input-cont">
+            <input type="text" class="form-control" name="dataOut-filter" placeholder="Год выпуска">
+            <button class="table-filter__submit table-search">
+              <img class="table-search__img" src="img/search.svg" alt="Искать">
+            </button>
           </div>
         </div>
       </form>
@@ -73,7 +82,7 @@
             <th class="table-th__fio" scope="col">ФИО</th>
             <th class="table-th__faculty" scope="col">Факультет</th>
             <th class="table-th__DOB" scope="col">Дата рождения</th>
-            <th class="table-th__years-of-study" scope="col">Годы обучения</th>
+            <th class="table-th__years-of-studing" scope="col">Годы обучения</th>
           </tr>
         </thead>
         <tbody>

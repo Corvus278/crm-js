@@ -207,4 +207,12 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     tableRender(students)
   })
+  document.querySelector('.table-th__years-of-studing').addEventListener('click', () => {
+    const students = JSON.parse(localStorage.getItem('students'))
+      .sort((studentA, studentB) => {
+        if (parseInt(studentA.dateIn.substr(-4)) < parseInt(studentB.dateIn.substr(-4))) return -1
+        else return 1
+      })
+    tableRender(students)
+  })
 })
