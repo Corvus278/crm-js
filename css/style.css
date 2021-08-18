@@ -56,11 +56,11 @@
   font-size: 14px;
 }
 
-.tabel-filter__content {
+.table-filter__content {
   justify-content: space-between;
 }
 
-.tabel-filter__heading {
+.table-filter__heading {
   font-size: 18px;
 }
 
@@ -88,8 +88,8 @@
 }
 
 
-/* ---- Tabel --- */
-.tabel-wrapper {
+/* ---- table --- */
+.table-wrapper {
   width: 1000px;
 }
 
@@ -107,7 +107,7 @@
     margin-right: 0;
   }
 
-  .tabel-wrapper {
+  .table-wrapper {
     width: 100%;
   }
 }
