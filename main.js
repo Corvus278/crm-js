@@ -192,6 +192,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ------ Фильтры для таблицы ------
 
+  // Обработчик на форму фильтра
+  // Сброс перезагрузки
+  document.querySelector('.table-filter').addEventListener('submit', (e) => {
+    e.preventDefault()
+  })
+
+  Array.from(document.querySelectorAll('.table-filter__submit')).forEach((btn => {
+    btn.addEventListener('click', () => {
+      // Список студентов
+      const students = JSON.parse(localStorage.getItem('students'))
+
+      // Нужный инпут
+      const input = document.querySelector(`input[name="` + String(btn.id) + `"]`)
+      console.log(input)
+      const searchValue = input.value
+
+      const searchStudents = students.filter((student) => {
+        switch (btn.id) {
+          case 'FIO-filter':
+            const fio = student.surname + student.name + student.secondName
+            if (fio.includes(searchValue)) return true
+            break
+          case 'faculty-filter':
+            if (student.faculty.includes(searchValue)) return true
+            break
+          case 'dateIn-filter':
+            console.log(student.dateIn)
+            if (student.dateIn.substr(-4) === searchValue) return true
+            break
+          case 'dateOut-filter':
+            console.log('dateOut')
+            console.log(searchValue)
+            console.log(String(parseInt(student.dateIn.substr(-4)) + 3))
+            if (String(parseInt(student.dateIn.substr(-4)) + 3) === searchValue) return true
+            break
+          default:
+            return false
+        }
+      })
+
+      // Рендеринг таблицы
+      tableRender(searchStudents)
+    })
+  }))
+
   // Обработчики на заголовки таблицы
   document.querySelector('.table-th__fio').addEventListener('click', () => {
     tableRender(filterByAlphabet(JSON.parse(localStorage.getItem('students')), 'fio'))
