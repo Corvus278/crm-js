@@ -82,11 +82,13 @@ function filterByAlphabet(students, key) {
 function tableRender(students = JSON.parse(localStorage.getItem('students'))) {
   function studentCourse(dateIn) {
     const dateNow = new Date()
-    const dateEnd = new Date(`01.09.${dateIn.getFullYear() + 4}`)
+    const dateEnd = new Date(`09.01.${dateIn.getFullYear() + 4}`)
 
-    if (dateNow > dateEnd) { return 'закончил' }
+    if (dateNow >= dateEnd) return 'закончил'
     else {
-      return `${(parseInt(dateNow.getFullYear()) - parseInt(dateIn.getFullYear())) + 1} курс`
+      const course = `${(parseInt(dateNow.getFullYear()) - parseInt(dateIn.getFullYear())) + 1} курс`
+      if (course.includes('5')) return 'закончил'
+      else return course
     }
   }
 
@@ -205,7 +207,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Нужный инпут
       const input = document.querySelector(`input[name="` + String(btn.id) + `"]`)
-      console.log(input)
       const searchValue = input.value
 
       const searchStudents = students.filter((student) => {
@@ -218,13 +219,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (student.faculty.includes(searchValue)) return true
             break
           case 'dateIn-filter':
-            console.log(student.dateIn)
             if (student.dateIn.substr(-4) === searchValue) return true
             break
           case 'dateOut-filter':
-            console.log('dateOut')
-            console.log(searchValue)
-            console.log(String(parseInt(student.dateIn.substr(-4)) + 3))
             if (String(parseInt(student.dateIn.substr(-4)) + 3) === searchValue) return true
             break
           default:
